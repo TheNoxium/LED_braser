@@ -13,7 +13,7 @@ struct Config_SISTEM
 struct Config_LOCAL_NETWORK
 {
    // int TYPE;
-   bool server;
+   bool network;
    bool type_connection;
    String server_name;
 };

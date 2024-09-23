@@ -43,7 +43,7 @@ void build()
     M_GRID(
         M_BLOCK_TAB(
             "Настройка сети",
-            M_BOX(GP.LABEL("Выключить/включить"); GP.SWITCH("swServer", configuration.config_LOCAL_NETWORK.server););
+            M_BOX(GP.LABEL("Выключить/включить"); GP.SWITCH("swServer", configuration.config_LOCAL_NETWORK.network););
             M_BOX(GP.LABEL("Сервер/клиент"); GP.SELECT("serv_cl", "Клиент,Сервер", configuration.config_LOCAL_NETWORK.type_connection););
             M_BOX(GP.LABEL("Имя сервера"); GP.TEXT("server_name", "", configuration.config_LOCAL_NETWORK.server_name);););
 
@@ -89,7 +89,7 @@ void action()
         if (ui.click("swServer"))
         {
             ESP_LOGI(TAG, "swServer = %d ", ui.getBool("swServer")); // свич настройка OCPP
-            configuration.config_LOCAL_NETWORK.server = ui.getBool("swServer");
+            configuration.config_LOCAL_NETWORK.network = ui.getBool("swServer");
             configuration.set_network_config();
         }
 

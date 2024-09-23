@@ -147,7 +147,7 @@ void Configuration::get_network_config(void)
     }
     else
     {
-        config_LOCAL_NETWORK.server = root["server"].as<bool>();
+        config_LOCAL_NETWORK.network = root["network"].as<bool>();
         config_LOCAL_NETWORK.server_name = root["server_name"].as<String>();
         config_LOCAL_NETWORK.type_connection = root["type_connection"].as<bool>();
         // config_LOCAL_NETWORK.PORT        = root["PORT"].as<int>();
@@ -155,7 +155,7 @@ void Configuration::get_network_config(void)
 
         file.close();
 
-        ESP_LOGW(TAG, "server -  %d", config_LOCAL_NETWORK.server);
+        ESP_LOGW(TAG, "network -  %d", config_LOCAL_NETWORK.network);
         ESP_LOGW(TAG, "server_name -  %s", config_LOCAL_NETWORK.server_name.c_str());
         ESP_LOGW(TAG, "type_connection -  %d", config_LOCAL_NETWORK.type_connection);
     }
@@ -189,7 +189,7 @@ void Configuration::set_network_config(void)
 
     StaticJsonDocument<1024> root;
 
-    root["server"] = config_LOCAL_NETWORK.server;
+    root["network"] = config_LOCAL_NETWORK.network;
     root["server_name"] = config_LOCAL_NETWORK.server_name;
     root["type_connection"] = config_LOCAL_NETWORK.type_connection;
     // root["PORT"]        =   config_LOCAL_NETWORK.PORT;
@@ -231,7 +231,7 @@ void Configuration::default_network_config(void)
 
     StaticJsonDocument<1024> root;
 
-    root["server"] = DEFAULT_SERVER;
+    root["network"] = DEFAULT_NETWORK;
     root["server_name"] = DEFAULT_SERVER_NAME;
     root["type_connection"] = DEFAULT_TYPE_CONNECTION;
     // root["PORT"]        =   DEFAULT_OCPP_PORT;
