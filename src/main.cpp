@@ -13,9 +13,14 @@ TaskHandle_t TaskHandle_6;
 
 String cpuId = "";
 
+int count = 0;
+int HP;
+int SOUND_FREEZE;
+
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN_LED, NEO_GRB + NEO_KHZ800);
 
-
+bool flag_server = 0;
+bool flag_client = 0;
 
 void get_cpuID()
 {
@@ -109,6 +114,10 @@ void setup()
       xTaskCreate(TaskLed, "TaskLed", STACK_SIZE_LED, NULL, 2, &TaskHandle_3);
       led_orange_red();
       xTaskCreate(TaskWebSocketClient, "TaskWebSocketClient", STACK_SIZE_WSCLIENT, NULL, 2, &TaskHandle_5);
+
+        led_green();
+        xTaskCreate(TaskCounter, "TaskCounter", STACK_SIZE_COUNTER, NULL, 2, &TaskHandle_2);
+
     }
     else if (configuration.config_LOCAL_NETWORK.type_connection == 1)
     {
@@ -116,6 +125,10 @@ void setup()
       xTaskCreate(TaskLed, "TaskLed", STACK_SIZE_LED, NULL, 2, &TaskHandle_3);
       led_blue();
       xTaskCreate(TaskWebSocketServer, "TaskWebSocketServer", STACK_SIZE_WSSERVER, NULL, 2, &TaskHandle_6);
+
+        led_green();
+        xTaskCreate(TaskCounter, "TaskCounter", STACK_SIZE_COUNTER, NULL, 2, &TaskHandle_2);
+
     }
   }
 }

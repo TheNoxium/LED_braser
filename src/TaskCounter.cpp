@@ -6,13 +6,12 @@ static const char *TAG = __FILE__;
 
 extern Configuration configuration;
 extern Adafruit_NeoPixel strip;
+extern int count,SOUND_FREEZE,HP;
 
 int state_giro;
 int state_piezo;
 int flag_led = 0;
-int count = 0;
-int HP;
-int SOUND_FREEZE;
+
 int frequency = 1000;
 
 void grean_leads()

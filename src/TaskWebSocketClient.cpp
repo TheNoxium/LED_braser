@@ -2,6 +2,8 @@
 
 static const char *TAG = __FILE__;
 
+extern int count, SOUND_FREEZE, HP;
+extern bool flag_client;
 // Определяем адрес сервера
 const char *ADDR = "192.168.4.1";
 
@@ -12,7 +14,7 @@ const char *URL = "/";
 const uint16_t PORT = 81;
 
 // Создаём массив для отправки
-int sdata1[2]{1984, 11276};
+int sdata1[3]{0, 0, 0};
 
 // Создаём массив для получения
 unsigned long rdata1[3]{0};
@@ -51,10 +53,8 @@ void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
     }
 }
 
-void TaskWebSocketClient(void *pvParameters)
+void WiFi_connect()
 {
-    (void)pvParameters;
-    ESP_LOGI(TAG, "%s", "TaskWebSocketClient start");
 
     // Устанавливаем режим работы в качестве клиента
     WiFi.mode(WIFI_STA);
@@ -79,7 +79,13 @@ void TaskWebSocketClient(void *pvParameters)
 
     // Если соединение прервано, повторить попытку через 5 сек.
     webSocketClient.setReconnectInterval(5000);
+}
 
+void TaskWebSocketClient(void *pvParameters)
+{
+    (void)pvParameters;
+    ESP_LOGI(TAG, "%s", "TaskWebSocketClient start");
+    WiFi_connect();
     for (;;)
     {
         try
@@ -92,7 +98,11 @@ void TaskWebSocketClient(void *pvParameters)
             // Если прошла одна секунда и сервер хотя бы раз прислал данные
             if (millis() % 1000 == 0)
             {
-
+                flag_client = 1;
+                // Отвечаем клиенту
+                sdata1[0] = HP;
+                sdata1[1] = SOUND_FREEZE;
+                sdata1[2] = count;
                 // Отправляем данные в двоичном формате серверу
                 webSocketClient.sendBIN((uint8_t *)sdata1, sizeof(sdata1));
 
@@ -104,6 +114,19 @@ void TaskWebSocketClient(void *pvParameters)
 
                     Serial.println("Текущие данные сервера:");
 
+                    if (rdata1[0] > HP)
+                    {
+                        HP = rdata1[0];
+                    }
+                    if (rdata1[1] > SOUND_FREEZE)
+                    {
+                        SOUND_FREEZE = rdata1[1];
+                    }
+                    if (rdata1[2] > count)
+                    {
+                        count = rdata1[2];
+                    }
+
                     // Выводим массив данных в последовательный порт
                     for (size_t i = 0; i < glen; i++)
                         Serial.println(rdata1[i]);
@@ -113,7 +136,7 @@ void TaskWebSocketClient(void *pvParameters)
             if (WiFi.status() != WL_CONNECTED)
 
                 // Вызываем функцию setup(), для повторного подключения
-                setup();
+                WiFi_connect();
         }
         catch (const std::exception &e)
         {

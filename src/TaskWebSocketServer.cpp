@@ -2,12 +2,14 @@
 
 static const char *TAG = __FILE__;
 
+extern int count, SOUND_FREEZE, HP;
+extern bool flag_server;
 
 // Массив для отправки
-unsigned long sdata[3]{1984, 1968, 0};
+unsigned long sdata[3]{0, 0, 0};
 
 // Массив для получения
-int rdata[2]{0};
+int rdata[3]{0};
 
 // Кол-во элементов массива для получения
 const size_t glen = sizeof(rdata) / sizeof(rdata[0]);
@@ -24,9 +26,6 @@ WebSocketsServer webSocket = WebSocketsServer(81);
  */
 void webSocketServerEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
 {
-
-    // Записываем текущие millis в третий элемент массива отправки
-    sdata[2] = millis();
 
     // Если тип данных двоичный и их размер не нулевой
     if (type == WStype_BIN && length > 0)
@@ -45,6 +44,10 @@ void webSocketServerEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t l
         }
 
         // Отвечаем клиенту
+        sdata[0] = HP;
+        sdata[1] = SOUND_FREEZE;
+        sdata[2] = count;
+
         webSocket.sendBIN(num, (uint8_t *)sdata, sizeof(sdata));
     }
 }
@@ -76,6 +79,7 @@ void TaskWebSocketServer(void *pvParameters)
     {
         try
         {
+
             webSocket.loop();
 
             // Если прошло 5 секунд...
@@ -85,8 +89,13 @@ void TaskWebSocketServer(void *pvParameters)
                 // Если данные были получены хотя бы один раз
                 if (rdata[0] != 0)
                 {
-
+                    flag_server = 1;
                     Serial.println("Текущие данные от клиента: ");
+
+                    if (rdata[2] > count)
+                    {
+                        count = rdata[2];
+                    }
 
                     // Выводим данные в последовательный порт
                     for (size_t i = 0; i < glen; i++)

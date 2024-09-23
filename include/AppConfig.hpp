@@ -8,7 +8,7 @@
 #define FIRMWARE_NAME "LED_braser" // Название прошивки
 #define MANUFACTURE "MOX corp"
 #define MODEL "1"
-#define VERSION_FIRMWARE "0.4.0"
+#define VERSION_FIRMWARE "0.4.1"
 
 //--------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------- Размеры стека памяти для потоков ---------------------------------------------------//
@@ -46,7 +46,7 @@
 
 #define FILE_SISTEM "/sistem.json"
 #define FILE_NETWORK "/network.json"
-#define DEFAULT_HP 1
+#define DEFAULT_HP 10
 #define DEFAULT_SOUND_FREEZE 500
 #define DEFAULT_NETWORK 1
 #define DEFAULT_SERVER_NAME "LED_Braser_Server"
