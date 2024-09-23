@@ -8,8 +8,8 @@ TaskHandle_t TaskHandle_1;
 TaskHandle_t TaskHandle_2;
 TaskHandle_t TaskHandle_3;
 TaskHandle_t TaskHandle_4;
-// TaskHandle_t TaskHandle_5;
-// TaskHandle_t TaskHandle_6;
+TaskHandle_t TaskHandle_5;
+TaskHandle_t TaskHandle_6;
 
 String cpuId = "";
 
@@ -92,11 +92,29 @@ void setup()
     led_violet();
     xTaskCreate(TaskWebserver, "TaskWebserver", STACK_SIZE_WEBSERVER, NULL, 2, &TaskHandle_4);
   }
-  else
+  else if (configuration.config_LOCAL_NETWORK.network == 0)
   {
     // xTaskCreate(TaskTest, "TaskTest", STACK_SIZE_TEST, NULL, 2, &TaskHandle_1);
     xTaskCreate(TaskCounter, "TaskCounter", STACK_SIZE_COUNTER, NULL, 2, &TaskHandle_2);
     xTaskCreate(TaskLed, "TaskLed", STACK_SIZE_LED, NULL, 2, &TaskHandle_3);
+  }
+  else if (configuration.config_LOCAL_NETWORK.network == 1)
+  {
+
+    if (configuration.config_LOCAL_NETWORK.type_connection == 0)
+    {
+      ESP_LOGE(TAG, "Зашел в клиент", FIRMWARE_NAME);
+      xTaskCreate(TaskLed, "TaskLed", STACK_SIZE_LED, NULL, 2, &TaskHandle_3);
+      led_orange_red();
+      xTaskCreate(TaskWebSocketClient, "TaskWebSocketClient", STACK_SIZE_WSCLIENT, NULL, 2, &TaskHandle_5);
+    }
+    else if (configuration.config_LOCAL_NETWORK.type_connection == 1)
+    {
+      ESP_LOGE(TAG, "Зашел в сервер", FIRMWARE_NAME);
+      xTaskCreate(TaskLed, "TaskLed", STACK_SIZE_LED, NULL, 2, &TaskHandle_3);
+      led_blue();
+      xTaskCreate(TaskWebSocketServer, "TaskWebSocketServer", STACK_SIZE_WSSERVER, NULL, 2, &TaskHandle_6);
+    }
   }
 }
 

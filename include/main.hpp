@@ -26,6 +26,10 @@
 #include "WiFiClientSecure.h"// Для сервера
 // #include "HTTPUpdate.h" // Для апдейта
 
+#include <WebServer.h>
+#include <WebSocketsServer.h>
+#include <WebSocketsClient.h>
+
 #include "AppConfig.hpp"
 #include "AppStructs.hpp"
 #include "Configuration.hpp"
@@ -33,6 +37,9 @@
 #include "TaskCounter.hpp"
 #include "TaskLed.hpp"
 #include "TaskWebserver.hpp"
+#include "TaskWebSocketServer.hpp"
+#include "TaskWebSocketClient.hpp"
+
 
 
 #endif
