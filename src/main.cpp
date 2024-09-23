@@ -11,7 +11,7 @@ TaskHandle_t TaskHandle_3;
 
 String cpuId = "";
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN_LED, NEO_GRB + NEO_KHZ800);
 
 void get_cpuID()
 {
@@ -51,7 +51,7 @@ void setup()
 
   // xTaskCreate(TaskTest, "TaskModbus", STACK_SIZE_TEST, NULL, 2, &TaskHandle_1);
   xTaskCreate(TaskCounter, "TaskCounter", STACK_SIZE_COUNTER, NULL, 2, &TaskHandle_2);
-  xTaskCreate(TaskLed, "TaskLed", STACK_SIZE_COUNTER, NULL, 2, &TaskHandle_3);
+  xTaskCreate(TaskLed, "TaskLed", STACK_SIZE_LED, NULL, 2, &TaskHandle_3);
 }
 
 void loop()

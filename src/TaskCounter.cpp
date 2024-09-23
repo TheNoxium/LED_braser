@@ -9,7 +9,7 @@ int state_giro;
 int state_piezo;
 int flag_led = 0;
 int count = 0;
-int HP = 3;
+int HP = 15;
 int frequency = 1000;
 
 void grean_leads()
@@ -64,7 +64,7 @@ void TaskCounter(void *pvParameters)
 
                     count++;
 
-                    // ESP_LOGI(TAG, "count - %d", count);
+                     ESP_LOGI(TAG, "Счетчик ударов %d", count);
                 }
             }
 
@@ -80,19 +80,19 @@ void TaskCounter(void *pvParameters)
                 frequency = 600;
                 flag_led = 2;
             }
-            else if (count > HP * 0.6 && flag_led == 2)
+            else if (count > HP * 0.5 && flag_led == 2)
             {
                 led_yellow_orange();
                 frequency = 500;
                 flag_led = 3;
             }
-            else if (count > HP * 0.8 && flag_led == 3)
+            else if (count > HP * 0.7 && flag_led == 3)
             {
                 led_orange();
                 frequency = 400;
                 flag_led = 4;
             }
-            else if (count > HP * 0.9 && flag_led == 4)
+            else if (count > HP * 0.8 && flag_led == 4)
             {
                 frequency = 300;
                 led_orange_red();
