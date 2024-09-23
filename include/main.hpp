@@ -14,6 +14,7 @@
 #include "AppConfig.hpp"
 #include "TaskTest.hpp"
 #include "TaskCounter.hpp"
+#include "TaskLed.hpp"
 
 
 #endif

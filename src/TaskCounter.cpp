@@ -1,4 +1,5 @@
 #include "TaskCounter.hpp"
+// #include "TaskLed.hpp"
 
 static const char *TAG = __FILE__;
 
@@ -55,7 +56,7 @@ void TaskCounter(void *pvParameters)
             {
                 if (flag == 1)
                 {
-                    grean_leads();
+                    led_green();
                     flag = 0;
                 }
             }
@@ -63,8 +64,8 @@ void TaskCounter(void *pvParameters)
             {
                 if (flag == 0)
                 {
-                    ESP_LOGI(TAG, "Б123123123");
-                    red_leads();
+
+                    led_red();
                     tone(PIEZO_SOUND_PIN, 500); // Частота
 
                     // vTaskDelay(500);
@@ -74,15 +75,13 @@ void TaskCounter(void *pvParameters)
                 }
 
                 int state1 = digitalRead(GERO_PIN);
-                if (state1 == HIGH)
+                if (state1 == LOW)
                 { // Если геркон замкнут
-                     Serial.println("Геркон замкнут");
+                    ESP_LOGW(TAG, "%s", "Гиркон замкнут");
+
                     // Здесь можно добавить код для выполнения действия
                     state = 0;
-
-
-                } else{Serial.println("Геркон говно");}
-
+                }
             }
 
             vTaskDelay(1);

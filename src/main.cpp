@@ -4,7 +4,7 @@ static const char *TAG = __FILE__;
 
 TaskHandle_t TaskHandle_1;
 TaskHandle_t TaskHandle_2;
-// TaskHandle_t TaskHandle_3;
+TaskHandle_t TaskHandle_3;
 // TaskHandle_t TaskHandle_4;
 // TaskHandle_t TaskHandle_5;
 // TaskHandle_t TaskHandle_6;
@@ -50,7 +50,8 @@ void setup()
   ESP_LOGD(TAG, "--------------------------------------------------------------------------------------------------------------------------------------------");
 
   // xTaskCreate(TaskTest, "TaskModbus", STACK_SIZE_TEST, NULL, 2, &TaskHandle_1);
-  xTaskCreate(TaskCounter, "TaskModbus", STACK_SIZE_COUNTER, NULL, 2, &TaskHandle_2);
+  xTaskCreate(TaskCounter, "TaskCounter", STACK_SIZE_COUNTER, NULL, 2, &TaskHandle_2);
+  xTaskCreate(TaskLed, "TaskLed", STACK_SIZE_COUNTER, NULL, 2, &TaskHandle_3);
 }
 
 void loop()
