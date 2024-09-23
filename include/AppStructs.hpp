@@ -10,6 +10,13 @@ struct Config_SISTEM
    int SOUND_FREEZE;
 };
 
+struct Config_LOCAL_NETWORK
+{
+   // int TYPE;
+   bool server;
+   String server_name;
+};
+
 /**
  * @brief
  *

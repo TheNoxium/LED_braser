@@ -11,6 +11,7 @@ class Configuration
 {
 public:
     Config_SISTEM config_SISTEM;
+    Config_LOCAL_NETWORK config_LOCAL_NETWORK;
 
     Configuration();
 

@@ -3,7 +3,7 @@
 static const char *TAG = __FILE__;
 
 extern Configuration configuration;
-
+extern String cpuId;
 GyverPortal ui(&LittleFS);
 
 #define AP_SSID "terratok2"
@@ -32,7 +32,7 @@ void build()
 
             // M_BOX(GP.LABEL("Количество Хит Поинтов"); GP.SELECT("HP", "2", configuration.config_SISTEM.HP););
             M_BOX(GP.LABEL("Количество Хит Поинтов"); GP.NUMBER("HP", "", configuration.config_SISTEM.HP););
-
+            M_BOX(GP.LABEL("Длительность звука"); GP.NUMBER("SOUND_FREEZE", "", configuration.config_SISTEM.SOUND_FREEZE););
 
             GP.ALERT("altT", "Alert Text");
             GP.BUTTON("btnReset", "Reset");
@@ -51,6 +51,8 @@ void build()
     M_BLOCK_TAB(
         "Системная информация",
         GP.SYSTEM_INFO(VERSION_FIRMWARE);
+
+        M_BOX(GP.LABEL("cpuId: ");GP.LABEL(cpuId););
 
     );
 
@@ -71,17 +73,24 @@ void action()
     {
         if (ui.click("HP"))
         {
-            ESP_LOGI(TAG, "HP = %d ", ui.getInt("HP")); // настройка тока 16/32
+            ESP_LOGI(TAG, "HP = %d ", ui.getInt("HP")); // настройка ХП
             configuration.config_SISTEM.HP = ui.getInt("HP");
             configuration.set_station_config();
         }
 
-    //     if (ui.click("swOSPP"))
-    //     {
-    //         ESP_LOGI(TAG, "swOSPP = %d ", ui.getBool("swOSPP")); // свич настройка OCPP
-    //         configuration.config_OCPP.ENABLED = ui.getBool("swOSPP");
-    //         configuration.set_ocpp_config();
-    //     }
+        if (ui.click("SOUND_FREEZE"))
+        {
+            ESP_LOGI(TAG, "SOUND_FREEZE = %d ", ui.getInt("SOUND_FREEZE")); // настройка задержки звука
+            configuration.config_SISTEM.SOUND_FREEZE = ui.getInt("SOUND_FREEZE");
+            configuration.set_station_config();
+        }
+
+        //     if (ui.click("swOSPP"))
+        //     {
+        //         ESP_LOGI(TAG, "swOSPP = %d ", ui.getBool("swOSPP")); // свич настройка OCPP
+        //         configuration.config_OCPP.ENABLED = ui.getBool("swOSPP");
+        //         configuration.set_ocpp_config();
+        //     }
         // if (ui.clickString("HP", configuration.config_SISTEM.HP)) // изменение полей OCPP ID
         // {
 
@@ -89,20 +98,20 @@ void action()
         //     configuration.config_SISTEM.HP = ui.getString("HP");
         //     configuration.set_station_config();
         // }
-    //     if (ui.clickString("url", configuration.config_OCPP.URL)) // изменение полей OCPP url
-    //     {
+        //     if (ui.clickString("url", configuration.config_OCPP.URL)) // изменение полей OCPP url
+        //     {
 
-    //         ESP_LOGI(TAG, "url = % ", ui.getString("url"));
-    //         configuration.config_OCPP.URL = ui.getString("url");
-    //         configuration.set_ocpp_config();
-    //     }
+        //         ESP_LOGI(TAG, "url = % ", ui.getString("url"));
+        //         configuration.config_OCPP.URL = ui.getString("url");
+        //         configuration.set_ocpp_config();
+        //     }
 
-    //     if (ui.click("swCounter"))
-    //     {
-    //         ESP_LOGI(TAG, "swCounter = %d ", ui.getBool("swCounter")); // свич настройка OCPP
-    //         configuration.config_COUNTER.ENABLED = ui.getBool("swCounter");
-    //         configuration.set_counter_config();
-    //     }
+        //     if (ui.click("swCounter"))
+        //     {
+        //         ESP_LOGI(TAG, "swCounter = %d ", ui.getBool("swCounter")); // свич настройка OCPP
+        //         configuration.config_COUNTER.ENABLED = ui.getBool("swCounter");
+        //         configuration.set_counter_config();
+        //     }
 
         if (ui.click("btnReset")) // кнопка ресет
         {
@@ -150,7 +159,7 @@ void TaskWebserver(void *pvParameters)
     // Serial.println(WiFi.localIP());
 
     WiFi.mode(WIFI_AP);
-    WiFi.softAP("LED_braser_wifi");
+    WiFi.softAP("LED_braser_wifi ");
 
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());

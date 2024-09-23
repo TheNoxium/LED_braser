@@ -89,7 +89,7 @@ void TaskLed(void *pvParameters)
                             }
                         }
                         strip.show();
-                        vTaskDelay(2); // Задержка для контроля скорости
+                        vTaskDelay(1); // Задержка для контроля скорости
                     }
 
                     // Затухание основного светодиода
@@ -106,7 +106,7 @@ void TaskLed(void *pvParameters)
                             }
                         }
                         strip.show();
-                        vTaskDelay(2); // Задержка для контроля скорости
+                        vTaskDelay(1); // Задержка для контроля скорости
                     }
                 }
                 break;
@@ -114,43 +114,43 @@ void TaskLed(void *pvParameters)
                 // Затухание и свечение по одному светодиоду
                 for (int i = 0; i < NUM_LEDS && led == 1; i++)
                 {
-                    // // Свечение основного светодиода
-                    // for (int j = 100; j <= 255 && led == 1; j++)
-                    // { // Увеличиваем яркость
-                    //     // Устанавливаем яркость для текущего светодиода
-                    //     strip.setPixelColor(i, strip.Color(j, 0, 0)); // Яркий красный
-                    //     // Устанавливаем тусклый красный для остальных
-                    //     for (int k = 0; k < NUM_LEDS && led == 9; k++)
-                    //     {
-                    //         if (k != i)
-                    //         {
-                    //             strip.setPixelColor(k, strip.Color(j / 4, 0, 0)); // Тусклый красный
-                    //         }
-                    //     }
-                    //     strip.show();
-                    //     vTaskDelay(2); // Задержка для контроля скорости
-                    // }
+                    // Свечение основного светодиода
+                    for (int j = 100; j <= 255 && led == 1; j++)
+                    { // Увеличиваем яркость
+                        // Устанавливаем яркость для текущего светодиода
+                        strip.setPixelColor(i, strip.Color(j, 0, 0)); // Яркий красный
+                        // Устанавливаем тусклый красный для остальных
+                        for (int k = 0; k < NUM_LEDS && led == 9; k++)
+                        {
+                            if (k != i)
+                            {
+                                strip.setPixelColor(k, strip.Color(j / 4, 0, 0)); // Тусклый красный
+                            }
+                        }
+                        strip.show();
+                        vTaskDelay(1); // Задержка для контроля скорости
+                    }
 
-                    // // Затухание основного светодиода
-                    // for (int j = 255; j >= 100 && led == 1; j--)
-                    // { // Уменьшаем яркость
-                    //     // Устанавливаем яркость для текущего светодиода
-                    //     strip.setPixelColor(i, strip.Color(j, 0, 0)); // Яркий красный
-                    //     // Устанавливаем тусклый красный для остальных
-                    //     for (int k = 0; k < NUM_LEDS && led == 1; k++)
-                    //     {
-                    //         if (k != i)
-                    //         {
-                    //             strip.setPixelColor(k, strip.Color(j / 4, 0, 0)); // Тусклый красный
-                    //         }
-                    //     }
-                    //     strip.show();
-                    //     vTaskDelay(2); // Задержка для контроля скорости
-                    // }
+                    // Затухание основного светодиода
+                    for (int j = 255; j >= 100 && led == 1; j--)
+                    { // Уменьшаем яркость
+                        // Устанавливаем яркость для текущего светодиода
+                        strip.setPixelColor(i, strip.Color(j, 0, 0)); // Яркий красный
+                        // Устанавливаем тусклый красный для остальных
+                        for (int k = 0; k < NUM_LEDS && led == 1; k++)
+                        {
+                            if (k != i)
+                            {
+                                strip.setPixelColor(k, strip.Color(j / 4, 0, 0)); // Тусклый красный
+                            }
+                        }
+                        strip.show();
+                        vTaskDelay(1); // Задержка для контроля скорости
+                    }
 
-                    strip.setPixelColor(i, strip.Color(255, 0, 0));
-                    strip.show();
-                    vTaskDelay(2);
+                    // strip.setPixelColor(i, strip.Color(255, 0, 0));
+                    // strip.show();
+                    // vTaskDelay(2);
                 }
                 break;
             case 2: // ЖЕЛТЫЙ
@@ -170,7 +170,7 @@ void TaskLed(void *pvParameters)
                             }
                         }
                         strip.show();
-                        vTaskDelay(2); // Задержка для контроля скорости
+                        vTaskDelay(1); // Задержка для контроля скорости
                     }
 
                     // Затухание основного светодиода
@@ -187,7 +187,7 @@ void TaskLed(void *pvParameters)
                             }
                         }
                         strip.show();
-                        vTaskDelay(2); // Задержка для контроля скорости
+                        vTaskDelay(1); // Задержка для контроля скорости
                     }
                 }
                 break;
@@ -208,7 +208,7 @@ void TaskLed(void *pvParameters)
                             }
                         }
                         strip.show();
-                        vTaskDelay(2); // Задержка для контроля скорости
+                        vTaskDelay(1); // Задержка для контроля скорости
                     }
 
                     // Затухание основного светодиода
@@ -225,7 +225,7 @@ void TaskLed(void *pvParameters)
                             }
                         }
                         strip.show();
-                        vTaskDelay(2); // Задержка для контроля скорости
+                        vTaskDelay(1); // Задержка для контроля скорости
                     }
                 }
                 break;
@@ -246,7 +246,7 @@ void TaskLed(void *pvParameters)
                             }
                         }
                         strip.show();
-                        vTaskDelay(2); // Задержка для контроля скорости
+                        vTaskDelay(1); // Задержка для контроля скорости
                     }
 
                     // Затухание основного светодиода
@@ -263,7 +263,7 @@ void TaskLed(void *pvParameters)
                             }
                         }
                         strip.show();
-                        vTaskDelay(2); // Задержка для контроля скорости
+                        vTaskDelay(1); // Задержка для контроля скорости
                     }
                 }
                 break;
@@ -285,7 +285,7 @@ void TaskLed(void *pvParameters)
                             }
                         }
                         strip.show();
-                        vTaskDelay(2); // Задержка для контроля скорости
+                        vTaskDelay(1); // Задержка для контроля скорости
                     }
 
                     // Затухание основного светодиода
@@ -302,7 +302,7 @@ void TaskLed(void *pvParameters)
                             }
                         }
                         strip.show();
-                        vTaskDelay(2); // Задержка для контроля скорости
+                        vTaskDelay(1); // Задержка для контроля скорости
                     }
                 }
                 break;

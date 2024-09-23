@@ -119,7 +119,7 @@ void TaskCounter(void *pvParameters)
                 frequency = 1000;
             }
 
-            vTaskDelay(2);
+            vTaskDelay(1);
         }
         catch (const std::exception &e)
         {
