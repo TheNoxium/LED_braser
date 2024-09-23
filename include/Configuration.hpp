@@ -10,7 +10,7 @@
 class Configuration
 {
 public:
-    Config_HP config_HP;
+    Config_SISTEM config_SISTEM;
 
     Configuration();
 

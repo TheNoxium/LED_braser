@@ -12,6 +12,7 @@ int state_piezo;
 int flag_led = 0;
 int count = 0;
 int HP;
+int SOUND_FREEZE;
 int frequency = 1000;
 
 void grean_leads()
@@ -36,7 +37,8 @@ void TaskCounter(void *pvParameters)
 {
     (void)pvParameters;
     ESP_LOGI(TAG, "%s", "TaskCounter start");
-    HP = configuration.config_HP.HP;
+    HP = configuration.config_SISTEM.HP;
+    SOUND_FREEZE = configuration.config_SISTEM.SOUND_FREEZE;
 
     for (;;)
     {
@@ -56,7 +58,7 @@ void TaskCounter(void *pvParameters)
 
                     tone(PIEZO_SOUND_PIN, frequency); // Частота
 
-                    vTaskDelay(300);
+                    vTaskDelay(SOUND_FREEZE);
                     noTone(PIEZO_SOUND_PIN);
 
                     count++;
@@ -103,7 +105,7 @@ void TaskCounter(void *pvParameters)
                 flag_led = 6;
                 tone(PIEZO_SOUND_PIN, 200); // Частота
 
-                vTaskDelay(300);
+                vTaskDelay(SOUND_FREEZE);
                 noTone(PIEZO_SOUND_PIN);
             }
 

@@ -28,10 +28,10 @@ void build()
 
     M_GRID(
         M_BLOCK_TAB(
-            "Настройка Хит Поинтов",
+            "Настройка системы",
 
-            // M_BOX(GP.LABEL("Количество Хит Поинтов"); GP.SELECT("HP", "2", configuration.config_HP.HP););
-            M_BOX(GP.LABEL("Количество Хит Поинтов"); GP.NUMBER("HP", "", configuration.config_HP.HP););
+            // M_BOX(GP.LABEL("Количество Хит Поинтов"); GP.SELECT("HP", "2", configuration.config_SISTEM.HP););
+            M_BOX(GP.LABEL("Количество Хит Поинтов"); GP.NUMBER("HP", "", configuration.config_SISTEM.HP););
 
 
             GP.ALERT("altT", "Alert Text");
@@ -72,7 +72,7 @@ void action()
         if (ui.click("HP"))
         {
             ESP_LOGI(TAG, "HP = %d ", ui.getInt("HP")); // настройка тока 16/32
-            configuration.config_HP.HP = ui.getInt("HP");
+            configuration.config_SISTEM.HP = ui.getInt("HP");
             configuration.set_station_config();
         }
 
@@ -82,11 +82,11 @@ void action()
     //         configuration.config_OCPP.ENABLED = ui.getBool("swOSPP");
     //         configuration.set_ocpp_config();
     //     }
-        // if (ui.clickString("HP", configuration.config_HP.HP)) // изменение полей OCPP ID
+        // if (ui.clickString("HP", configuration.config_SISTEM.HP)) // изменение полей OCPP ID
         // {
 
         //     ESP_LOGI(TAG, "HP = %s ", ui.getString("HP"));
-        //     configuration.config_HP.HP = ui.getString("HP");
+        //     configuration.config_SISTEM.HP = ui.getString("HP");
         //     configuration.set_station_config();
         // }
     //     if (ui.clickString("url", configuration.config_OCPP.URL)) // изменение полей OCPP url

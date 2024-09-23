@@ -3,11 +3,11 @@
 
 #include "main.hpp"
 
-struct Config_HP
+struct Config_SISTEM
 {
    // int TYPE;
-    int HP;
-   // bool FORCED;
+   int HP;
+   int SOUND_FREEZE;
 };
 
 /**
