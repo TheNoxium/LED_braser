@@ -22,6 +22,10 @@ public:
     void get_station_config(void);
     void set_station_config(void);
     void default_station_config(void);
+
+    void get_network_config(void);
+    void set_network_config(void);
+    void default_network_config(void);
 };
 
 #endif
