@@ -8,6 +8,8 @@
 #include <freertos/FreeRTOS.h> ///ФРЕРТОС
 #include <freertos/task.h>     // ФРЕРОС ТАСК
 
+#include <Adafruit_NeoPixel.h> // лента
+
 
 #include "AppConfig.hpp"
 #include "TaskTest.hpp"

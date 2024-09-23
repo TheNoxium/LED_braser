@@ -9,8 +9,9 @@ TaskHandle_t TaskHandle_2;
 // TaskHandle_t TaskHandle_5;
 // TaskHandle_t TaskHandle_6;
 
-
 String cpuId = "";
+
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);
 
 void get_cpuID()
 {
@@ -22,13 +23,20 @@ void get_cpuID()
   ESP_LOGD(TAG, "%s", "Get CpuID end");
 }
 
+void get_led()
+{
 
+  strip.begin(); // Инициализация ленты
+  strip.show();  // Обновление ленты
+}
 void setup()
 {
 
-UART.begin(UART_BAUNDRATE);
+  UART.begin(UART_BAUNDRATE);
 
-get_cpuID(); // функция для инициализации итернета
+  get_cpuID();
+
+  get_led();
 
   ESP_LOGD(TAG, "--------------------------------------------------------------------------------------------------------------------------------------------");
 
@@ -41,10 +49,8 @@ get_cpuID(); // функция для инициализации итернет�
 
   ESP_LOGD(TAG, "--------------------------------------------------------------------------------------------------------------------------------------------");
 
-//  xTaskCreate(TaskTest, "TaskTest", 8192, NULL, 1, &TaskHandle_1);                       // запуск таска сетчика
-xTaskCreate(TaskTest, "TaskModbus", STACK_SIZE_TEST, NULL, 2, &TaskHandle_1);
-xTaskCreate(TaskCounter, "TaskModbus", STACK_SIZE_COUNTER, NULL, 2, &TaskHandle_2);
-
+  // xTaskCreate(TaskTest, "TaskModbus", STACK_SIZE_TEST, NULL, 2, &TaskHandle_1);
+  xTaskCreate(TaskCounter, "TaskModbus", STACK_SIZE_COUNTER, NULL, 2, &TaskHandle_2);
 }
 
 void loop()
