@@ -11,6 +11,7 @@
 #include <ETH.h> //Инет
 #include <WiFi.h>   // вафля
 #include <WiFiMulti.h>
+#include <WiFiAP.h>
 
 #include <freertos/FreeRTOS.h> ///ФРЕРТОС
 #include <freertos/task.h>     // ФРЕРОС ТАСК
@@ -29,6 +30,7 @@
 #include <WebServer.h>
 #include <WebSocketsServer.h>
 #include <WebSocketsClient.h>
+
 
 #include "AppConfig.hpp"
 #include "AppStructs.hpp"

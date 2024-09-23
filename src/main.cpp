@@ -15,6 +15,8 @@ String cpuId = "";
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN_LED, NEO_GRB + NEO_KHZ800);
 
+
+
 void get_cpuID()
 {
   ESP_LOGD(TAG, "%s", "Get CpuID start");
