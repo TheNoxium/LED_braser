@@ -40,19 +40,20 @@ void build()
 
         ;);
 
-    // M_GRID(
-    //     M_BLOCK_TAB(
-    //         "Настройка счетчика",
-    //         M_BOX(GP.LABEL("Вкл/выкл"); GP.SWITCH("swCounter", configuration.config_COUNTER.ENABLED);););
+    M_GRID(
+        M_BLOCK_TAB(
+            "Настройка сети",
+            M_BOX(GP.LABEL("Выключить/включить"); GP.SWITCH("swServer", configuration.config_LOCAL_NETWORK.server););
+            M_BOX(GP.LABEL("Сервер/клиент"); GP.SELECT("serv_cl", "Клиент,Сервер", configuration.config_LOCAL_NETWORK.type_connection););
+            M_BOX(GP.LABEL("Имя сервера"); GP.TEXT("server_name", "", configuration.config_LOCAL_NETWORK.server_name);););
 
-    //     M_BLOCK_TAB(
-    //         "Тут может быть ваша рекламма", ););
+    );
 
     M_BLOCK_TAB(
         "Системная информация",
         GP.SYSTEM_INFO(VERSION_FIRMWARE);
 
-        M_BOX(GP.LABEL("cpuId: ");GP.LABEL(cpuId););
+        M_BOX(GP.LABEL("cpuId: "); GP.LABEL(cpuId););
 
     );
 
@@ -85,12 +86,27 @@ void action()
             configuration.set_station_config();
         }
 
-        //     if (ui.click("swOSPP"))
-        //     {
-        //         ESP_LOGI(TAG, "swOSPP = %d ", ui.getBool("swOSPP")); // свич настройка OCPP
-        //         configuration.config_OCPP.ENABLED = ui.getBool("swOSPP");
-        //         configuration.set_ocpp_config();
-        //     }
+        if (ui.click("swServer"))
+        {
+            ESP_LOGI(TAG, "swServer = %d ", ui.getBool("swServer")); // свич настройка OCPP
+            configuration.config_LOCAL_NETWORK.server = ui.getBool("swServer");
+            configuration.set_network_config();
+        }
+
+        if (ui.click("serv_cl"))
+        {
+            ESP_LOGI(TAG, "serv_cl = %d ", ui.getBool("serv_cl")); // свич настройка OCPP
+            configuration.config_LOCAL_NETWORK.type_connection = ui.getBool("serv_cl");
+            configuration.set_network_config();
+        }
+
+        if (ui.clickString("server_name", configuration.config_LOCAL_NETWORK.server_name)) // изменение полей OCPP ID
+        {
+
+            ESP_LOGI(TAG, "server_name = %s ", ui.getString("server_name"));
+            configuration.config_LOCAL_NETWORK.server_name = ui.getString("server_name");
+            configuration.set_network_config();
+        }
         // if (ui.clickString("HP", configuration.config_SISTEM.HP)) // изменение полей OCPP ID
         // {
 

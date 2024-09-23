@@ -149,7 +149,7 @@ void Configuration::get_network_config(void)
     {
         config_LOCAL_NETWORK.server = root["server"].as<bool>();
         config_LOCAL_NETWORK.server_name = root["server_name"].as<String>();
-        // config_LOCAL_NETWORK.HOST        = root["HOST"].as<String>();
+        config_LOCAL_NETWORK.type_connection = root["type_connection"].as<bool>();
         // config_LOCAL_NETWORK.PORT        = root["PORT"].as<int>();
         // config_LOCAL_NETWORK.URL = root["URL"].as<String>();
 
@@ -157,7 +157,7 @@ void Configuration::get_network_config(void)
 
         ESP_LOGW(TAG, "server -  %d", config_LOCAL_NETWORK.server);
         ESP_LOGW(TAG, "server_name -  %s", config_LOCAL_NETWORK.server_name.c_str());
-        // ESP_LOGW(TAG, "URL -  %s", configuration.config_LOCAL_NETWORK.URL.c_str());
+        ESP_LOGW(TAG, "type_connection -  %d", config_LOCAL_NETWORK.type_connection);
     }
 
     ESP_LOGD(TAG, "Close file %s", FILE_NETWORK);
@@ -191,7 +191,7 @@ void Configuration::set_network_config(void)
 
     root["server"] = config_LOCAL_NETWORK.server;
     root["server_name"] = config_LOCAL_NETWORK.server_name;
-    // root["HOST"]        =   config_LOCAL_NETWORK.HOST;
+    root["type_connection"] = config_LOCAL_NETWORK.type_connection;
     // root["PORT"]        =   config_LOCAL_NETWORK.PORT;
     // root["URL"] = config_LOCAL_NETWORK.URL;
 
@@ -233,7 +233,7 @@ void Configuration::default_network_config(void)
 
     root["server"] = DEFAULT_SERVER;
     root["server_name"] = DEFAULT_SERVER_NAME;
-    // root["HOST"]        =   DEFAULT_OCPP_HOST;
+    root["type_connection"] = DEFAULT_TYPE_CONNECTION;
     // root["PORT"]        =   DEFAULT_OCPP_PORT;
     // root["URL"] = DEFAULT_OCPP_URL;
 

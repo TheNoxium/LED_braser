@@ -14,6 +14,7 @@ struct Config_LOCAL_NETWORK
 {
    // int TYPE;
    bool server;
+   bool type_connection;
    String server_name;
 };
 
