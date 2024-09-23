@@ -5,6 +5,7 @@ static const char *TAG = __FILE__;
 extern Adafruit_NeoPixel strip;
 
 bool state = 0;
+bool flag = 1;
 
 void grean_leads()
 {
@@ -33,6 +34,8 @@ void TaskCounter(void *pvParameters)
 
     pinMode(PIEZO_SOUND_PIN, OUTPUT); // Устанавливаем пин как выход
 
+    pinMode(GERO_PIN, INPUT_PULLUP);
+
     for (;;)
     {
         try
@@ -44,29 +47,45 @@ void TaskCounter(void *pvParameters)
             {
 
                 state = 1;
-                red_leads();
+
                 ESP_LOGI(TAG, "Был удар>");
-
-                tone(PIEZO_SOUND_PIN, 500); // Частота
-
-                // vTaskDelay(500);
-                delay(1000);
-                noTone(PIEZO_SOUND_PIN);
-            }
-            else
-            {
-
-                // ESP_LOGI(TAG, "Сигнал низкий");
             }
 
             if (state == 0)
             {
-                grean_leads();
+                if (flag == 1)
+                {
+                    grean_leads();
+                    flag = 0;
+                }
             }
-            if (state == 1)
+            else if (state == 1)
             {
+                if (flag == 0)
+                {
+                    ESP_LOGI(TAG, "Б123123123");
+                    red_leads();
+                    tone(PIEZO_SOUND_PIN, 500); // Частота
+
+                    // vTaskDelay(500);
+                    delay(1000);
+                    noTone(PIEZO_SOUND_PIN);
+                    flag = 1;
+                }
+
+                int state1 = digitalRead(GERO_PIN);
+                if (state1 == HIGH)
+                { // Если геркон замкнут
+                     Serial.println("Геркон замкнут");
+                    // Здесь можно добавить код для выполнения действия
+                    state = 0;
+
+
+                } else{Serial.println("Геркон говно");}
 
             }
+
+            vTaskDelay(1);
         }
         catch (const std::exception &e)
         {

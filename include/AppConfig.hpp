@@ -29,6 +29,7 @@
 
 #define PIEZO_SENSOR_PIN 18
 #define PIEZO_SOUND_PIN 23
+#define GERO_PIN 19
 
 #define PIN        22  // Пин, к которому подключена лента
 #define NUM_LEDS   5  // Количество светодиодов в
