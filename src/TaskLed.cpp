@@ -71,7 +71,7 @@ void TaskLed(void *pvParameters)
                             }
                         }
                         strip.show();
-                        vTaskDelay(1); // Задержка для контроля скорости
+                        vTaskDelay(2); // Задержка для контроля скорости
                     }
 
                     // Затухание основного светодиода
@@ -88,7 +88,7 @@ void TaskLed(void *pvParameters)
                             }
                         }
                         strip.show();
-                        vTaskDelay(1); // Задержка для контроля скорости
+                        vTaskDelay(2); // Задержка для контроля скорости
                     }
                 }
                 break;
