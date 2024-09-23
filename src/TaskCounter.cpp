@@ -5,8 +5,12 @@ static const char *TAG = __FILE__;
 
 extern Adafruit_NeoPixel strip;
 
-bool state = 0;
-bool flag = 1;
+int state_giro;
+int state_piezo;
+int flag_led = 0;
+int count = 0;
+int HP = 3;
+int frequency = 1000;
 
 void grean_leads()
 {
@@ -42,49 +46,81 @@ void TaskCounter(void *pvParameters)
         try
         {
 
-            int signal = digitalRead(PIEZO_SENSOR_PIN); // Читаем состояние пина
+            state_piezo = digitalRead(PIEZO_SENSOR_PIN); // Читаем состояние пина
+            state_giro = digitalRead(GERO_PIN);
+            // ESP_LOGI(TAG, "state_giro - %d", state_giro);
 
-            if (signal == HIGH)
+            if (flag_led != 6)
             {
-
-                state = 1;
-
-                ESP_LOGI(TAG, "Был удар>");
-            }
-
-            if (state == 0)
-            {
-                if (flag == 1)
-                {
-                    led_green();
-                    flag = 0;
-                }
-            }
-            else if (state == 1)
-            {
-                if (flag == 0)
+                if (state_piezo == HIGH)
                 {
 
-                    led_red();
-                    tone(PIEZO_SOUND_PIN, 500); // Частота
+                    ESP_LOGI(TAG, "Был удар>");
 
-                    // vTaskDelay(500);
-                    delay(1000);
+                    tone(PIEZO_SOUND_PIN, frequency); // Частота
+
+                    vTaskDelay(300);
                     noTone(PIEZO_SOUND_PIN);
-                    flag = 1;
-                }
 
-                int state1 = digitalRead(GERO_PIN);
-                if (state1 == LOW)
-                { // Если геркон замкнут
-                    ESP_LOGW(TAG, "%s", "Гиркон замкнут");
+                    count++;
 
-                    // Здесь можно добавить код для выполнения действия
-                    state = 0;
+                    // ESP_LOGI(TAG, "count - %d", count);
                 }
             }
 
-            vTaskDelay(1);
+            if (count > HP * 0.2 && flag_led == 0)
+            {
+                led_yellow_green();
+                frequency = 800;
+                flag_led = 1;
+            }
+            else if (count > HP * 0.4 && flag_led == 1)
+            {
+                led_yellow();
+                frequency = 600;
+                flag_led = 2;
+            }
+            else if (count > HP * 0.6 && flag_led == 2)
+            {
+                led_yellow_orange();
+                frequency = 500;
+                flag_led = 3;
+            }
+            else if (count > HP * 0.8 && flag_led == 3)
+            {
+                led_orange();
+                frequency = 400;
+                flag_led = 4;
+            }
+            else if (count > HP * 0.9 && flag_led == 4)
+            {
+                frequency = 300;
+                led_orange_red();
+                flag_led = 5;
+            }
+            else if (count == HP && flag_led == 5)
+            {
+
+                ESP_LOGI(TAG, "хп кончилось");
+                led_red();
+                flag_led = 6;
+                tone(PIEZO_SOUND_PIN, 200); // Частота
+
+                vTaskDelay(300);
+                noTone(PIEZO_SOUND_PIN);
+            }
+
+            if (state_giro == LOW && flag_led == 6)
+            { // Если геркон замкнут
+                ESP_LOGW(TAG, "%s", "Гиркон замкнут");
+                count = 0;
+                flag_led = 0;
+                led_green();
+                state_giro = HIGH;
+                frequency = 1000;
+            }
+
+            vTaskDelay(2);
         }
         catch (const std::exception &e)
         {

@@ -41,6 +41,24 @@ void led_blue()
     ESP_LOGD(TAG, "led = 5");
 }
 
+void led_yellow_green()
+{
+    led = 6;
+    ESP_LOGD(TAG, "led = 5");
+}
+
+void led_yellow_orange()
+{
+    led = 7;
+    ESP_LOGD(TAG, "led = 5");
+}
+
+void led_orange_red()
+{
+    led = 8;
+    ESP_LOGD(TAG, "led = 5");
+}
+
 void TaskLed(void *pvParameters)
 {
     (void)pvParameters;
@@ -284,8 +302,143 @@ void TaskLed(void *pvParameters)
                     }
                 }
                 break;
-            case 6:
-              break;
+            case 6: // желто зеленый
+                // Затухание и свечение по одному светодиоду
+                for (int i = 0; i < NUM_LEDS && led == 6; i++)
+                {
+                    // Свечение основного светодиода
+                    for (int j = 0; j <= 255 && led == 6; j++)
+                    {
+                        // Увеличиваем яркость
+                        // Устанавливаем яркость для текущего светодиода (переход от зеленого к желтому)
+                        strip.setPixelColor(i, strip.Color(j, 255, 0)); // Плавный переход от зеленого к желтому
+
+                        // Устанавливаем тусклый цвет для остальных
+                        for (int k = 0; k < NUM_LEDS && led == 6; k++)
+                        {
+                            if (k != i)
+                            {
+                                strip.setPixelColor(k, strip.Color(j / 4, 255 / 4, 0)); // Тусклый цвет
+                            }
+                        }
+                        strip.show();
+                        vTaskDelay(1); // Задержка для контроля скорости
+                    }
+
+                    // Затухание основного светодиода
+                    for (int j = 255; j >= 0 && led == 6; j--)
+                    {
+                        // Уменьшаем яркость
+                        // Устанавливаем яркость для текущего светодиода (переход от зеленого к желтому)
+                        strip.setPixelColor(i, strip.Color(j, 255, 0)); // Плавный переход от зеленого к желтому
+
+                        // Устанавливаем тусклый цвет для остальных
+                        for (int k = 0; k < NUM_LEDS && led == 6; k++)
+                        {
+                            if (k != i)
+                            {
+                                strip.setPixelColor(k, strip.Color(j / 4, 255 / 4, 0)); // Тусклый цвет
+                            }
+                        }
+                        strip.show();
+                        vTaskDelay(1); // Задержка для контроля скорости
+                    }
+                }
+                break;
+            case 7: // желто оранжевый
+                // Затухание и свечение по одному светодиоду
+                for (int i = 0; i < NUM_LEDS && led == 7; i++)
+                {
+                    // Свечение основного светодиода
+                    for (int j = 0; j <= 255 && led == 7; j++)
+                    {
+                        // Увеличиваем яркость
+                        // Устанавливаем яркость для текущего светодиода (переход от желтого к оранжевому)
+                        int redValue = map(j, 0, 255, 255, 255);                      // Красный остается постоянным
+                        int greenValue = map(j, 0, 255, 255, 165);                    // Зеленый уменьшается от 255 до 165
+                        strip.setPixelColor(i, strip.Color(redValue, greenValue, 0)); // Плавный переход
+
+                        // Устанавливаем тусклый цвет для остальных
+                        for (int k = 0; k < NUM_LEDS && led == 7; k++)
+                        {
+                            if (k != i)
+                            {
+                                strip.setPixelColor(k, strip.Color(redValue / 4, greenValue / 4, 0)); // Тусклый цвет
+                            }
+                        }
+                        strip.show();
+                        vTaskDelay(1); // Задержка для контроля скорости
+                    }
+
+                    // Затухание основного светодиода
+                    for (int j = 255; j >= 0 && led == 7; j--)
+                    {
+                        // Уменьшаем яркость
+                        // Устанавливаем яркость для текущего светодиода (переход от желтого к оранжевому)
+                        int redValue = map(j, 0, 255, 255, 255);                      // Красный остается постоянным
+                        int greenValue = map(j, 0, 255, 255, 165);                    // Зеленый уменьшается от 255 до 165
+                        strip.setPixelColor(i, strip.Color(redValue, greenValue, 0)); // Плавный переход
+
+                        // Устанавливаем тусклый цвет для остальных
+                        for (int k = 0; k < NUM_LEDS && led == 7; k++)
+                        {
+                            if (k != i)
+                            {
+                                strip.setPixelColor(k, strip.Color(redValue / 4, greenValue / 4, 0)); // Тусклый цвет
+                            }
+                        }
+                        strip.show();
+                        vTaskDelay(1); // Задержка для контроля скорости
+                    }
+                }
+                break;
+            case 8: // оранжево красный
+                // Затухание и свечение по одному светодиоду
+                for (int i = 0; i < NUM_LEDS && led == 8; i++)
+                {
+                    // Свечение основного светодиода
+                    for (int j = 0; j <= 255 && led == 8; j++)
+                    {
+                        // Увеличиваем яркость
+                        // Устанавливаем яркость для текущего светодиода (переход от оранжевого к красному)
+                        int redValue = map(j, 0, 255, 255, 255);                      // Красный остается постоянным
+                        int greenValue = map(j, 0, 255, 165, 0);                      // Зеленый уменьшается от 165 до 0
+                        strip.setPixelColor(i, strip.Color(redValue, greenValue, 0)); // Плавный переход
+
+                        // Устанавливаем тусклый цвет для остальных
+                        for (int k = 0; k < NUM_LEDS && led == 8; k++)
+                        {
+                            if (k != i)
+                            {
+                                strip.setPixelColor(k, strip.Color(redValue / 4, greenValue / 4, 0)); // Тусклый цвет
+                            }
+                        }
+                        strip.show();
+                        vTaskDelay(1); // Задержка для контроля скорости
+                    }
+
+                    // Затухание основного светодиода
+                    for (int j = 255; j >= 0 && led == 8; j--)
+                    {
+                        // Уменьшаем яркость
+                        // Устанавливаем яркость для текущего светодиода (переход от оранжевого к красному)
+                        int redValue = map(j, 0, 255, 255, 255);                      // Красный остается постоянным
+                        int greenValue = map(j, 0, 255, 165, 0);                      // Зеленый уменьшается от 165 до 0
+                        strip.setPixelColor(i, strip.Color(redValue, greenValue, 0)); // Плавный переход
+
+                        // Устанавливаем тусклый цвет для остальных
+                        for (int k = 0; k < NUM_LEDS && led == 8; k++)
+                        {
+                            if (k != i)
+                            {
+                                strip.setPixelColor(k, strip.Color(redValue / 4, greenValue / 4, 0)); // Тусклый цвет
+                            }
+                        }
+                        strip.show();
+                        vTaskDelay(1); // Задержка для контроля скорости
+                    }
+                }
+                break;
             }
         }
         catch (const std::exception &e)
