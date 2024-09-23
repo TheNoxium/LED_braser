@@ -3,13 +3,15 @@
 
 static const char *TAG = __FILE__;
 
+
+extern Configuration configuration;
 extern Adafruit_NeoPixel strip;
 
 int state_giro;
 int state_piezo;
 int flag_led = 0;
 int count = 0;
-int HP = 15;
+int HP;
 int frequency = 1000;
 
 void grean_leads()
@@ -34,12 +36,7 @@ void TaskCounter(void *pvParameters)
 {
     (void)pvParameters;
     ESP_LOGI(TAG, "%s", "TaskCounter start");
-
-    pinMode(PIEZO_SENSOR_PIN, INPUT); // Устанавливаем пин D18 как вход
-
-    pinMode(PIEZO_SOUND_PIN, OUTPUT); // Устанавливаем пин как выход
-
-    pinMode(GERO_PIN, INPUT_PULLUP);
+    HP = configuration.config_HP.HP;
 
     for (;;)
     {
