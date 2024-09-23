@@ -72,7 +72,7 @@ void Configuration::set_station_config(void)
     StaticJsonDocument<1024> root;
 
     // root["TYPE"] = config_STATION.TYPE;
-    root["POWER"] = config_HP.HP;
+    root["HP"] = config_HP.HP;
     // root["FORCED"] = config_STATION.FORCED;
 
     if (serializeJson(root, file) == 0)

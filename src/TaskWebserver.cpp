@@ -23,26 +23,22 @@ void build()
     // при ширине меньше 600 GRID отключится (блоки пойдут по вертикали)
     GP.GRID_RESPONSIVE(600);
 
-    GP.TITLE("Настройка зарядной станции");
+    GP.TITLE("Настройка");
     GP.HR();
 
-    // M_GRID(
-    //     M_BLOCK_TAB(
-    //         "Настройка станции",
+    M_GRID(
+        M_BLOCK_TAB(
+            "Настройка Хит Поинтов",
 
-    //         M_BOX(GP.LABEL("Макс. ток"); GP.SELECT("power", "16,32", configuration.config_STATION.POWER););
+            // M_BOX(GP.LABEL("Количество Хит Поинтов"); GP.SELECT("HP", "2", configuration.config_HP.HP););
+            M_BOX(GP.LABEL("Количество Хит Поинтов"); GP.NUMBER("HP", "", configuration.config_HP.HP););
 
-    //         GP.ALERT("altT", "Alert Text");
-    //         GP.BUTTON("btnReset", "Reset");
-    //         GP.UPDATE_CLICK("altT", "btnReset"););
 
-    //     M_BLOCK_TAB(
-    //         "Нстройка OCPP",
-    //         M_BOX(GP.LABEL("Вкл/выкл"); GP.SWITCH("swOSPP", configuration.config_OCPP.ENABLED););
-    //         M_BOX(GP.LABEL("ID"); GP.TEXT("id", "", configuration.config_OCPP.ID););
-    //         M_BOX(GP.LABEL("URL"); GP.TEXT("url", "", configuration.config_OCPP.URL);)
+            GP.ALERT("altT", "Alert Text");
+            GP.BUTTON("btnReset", "Reset");
+            GP.UPDATE_CLICK("altT", "btnReset"););
 
-    //             ;););
+        ;);
 
     // M_GRID(
     //     M_BLOCK_TAB(
@@ -71,14 +67,14 @@ void build()
 
 void action()
 {
-    // if (ui.click())
-    // {
-    //     if (ui.click("power"))
-    //     {
-    //         ESP_LOGI(TAG, "power = %d ", ui.getInt("power")); // настройка тока 16/32
-    //         configuration.config_STATION.POWER = ui.getInt("power");
-    //         configuration.set_station_config();
-    //     }
+    if (ui.click())
+    {
+        if (ui.click("HP"))
+        {
+            ESP_LOGI(TAG, "HP = %d ", ui.getInt("HP")); // настройка тока 16/32
+            configuration.config_HP.HP = ui.getInt("HP");
+            configuration.set_station_config();
+        }
 
     //     if (ui.click("swOSPP"))
     //     {
@@ -86,13 +82,13 @@ void action()
     //         configuration.config_OCPP.ENABLED = ui.getBool("swOSPP");
     //         configuration.set_ocpp_config();
     //     }
-    //     if (ui.clickString("id", configuration.config_OCPP.ID)) // изменение полей OCPP ID
-    //     {
+        // if (ui.clickString("HP", configuration.config_HP.HP)) // изменение полей OCPP ID
+        // {
 
-    //         ESP_LOGI(TAG, "id = %s ", ui.getString("id"));
-    //         configuration.config_OCPP.ID = ui.getString("id");
-    //         configuration.set_ocpp_config();
-    //     }
+        //     ESP_LOGI(TAG, "HP = %s ", ui.getString("HP"));
+        //     configuration.config_HP.HP = ui.getString("HP");
+        //     configuration.set_station_config();
+        // }
     //     if (ui.clickString("url", configuration.config_OCPP.URL)) // изменение полей OCPP url
     //     {
 
@@ -108,16 +104,14 @@ void action()
     //         configuration.set_counter_config();
     //     }
 
-    //     if (ui.click("btnReset")) // кнопка ресет
-    //     {
-    //         ESP_LOGI(TAG, "%s", "Нажата кнопка RESET");
-    //         ui.answer(1);
-    //         resetState = ResetState_Hard;
-    //         writeFlagResetState = 1;
-    //         vTaskDelay(5000);
-    //         ESP.restart();
-    //     }
-    // }
+        if (ui.click("btnReset")) // кнопка ресет
+        {
+            ESP_LOGI(TAG, "%s", "Нажата кнопка RESET");
+            ui.answer(1);
+            vTaskDelay(500);
+            ESP.restart();
+        }
+    }
 }
 
 void TaskWebserver(void *pvParameters)
